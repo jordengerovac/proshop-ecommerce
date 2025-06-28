@@ -30,7 +30,3 @@ yarn run dev
 ### Run tests
 
 yarn run test
-
-### Format code
-
-yarn run format
