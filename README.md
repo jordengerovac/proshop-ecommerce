@@ -16,9 +16,11 @@ yarn run build
 
 ### Build client app
 
-cd frontend/
-yarn
-cd ../
+#### cd frontend/
+
+#### yarn
+
+#### cd ../
 
 ### Start app
 
