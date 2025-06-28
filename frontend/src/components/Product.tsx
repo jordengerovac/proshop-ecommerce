@@ -1,6 +1,11 @@
 import { Card } from "react-bootstrap";
+import { Product as ProductType } from "../types/Product";
 
-function Product({ product }) {
+type ProductProps = {
+  product: ProductType;
+};
+
+function Product({ product }: ProductProps) {
   return (
     <Card className="my-3 p-3 rounded">
       <a href={`/product/${product._id}`}>
