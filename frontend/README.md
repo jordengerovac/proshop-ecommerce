@@ -20,7 +20,17 @@ If you are developing a production application, we recommend using TypeScript wi
 ## Running the app
 
 ### Install dependencies
+
 yarn
 
 ### Start app
+
 yarn run dev
+
+### Run tests
+
+yarn run test
+
+### Format code
+
+yarn run format
