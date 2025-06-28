@@ -1,8 +1,8 @@
 import { Card } from "react-bootstrap";
-import { Product as ProductType } from "../types/Product";
+import IProduct from "../types/product.type";
 
 type ProductProps = {
-  product: ProductType;
+  product: IProduct;
 };
 
 function Product({ product }: ProductProps) {
