@@ -10,9 +10,15 @@
 
 yarn
 
-### Build app
+### Build server app
 
 yarn run build
+
+### Build client app
+
+cd frontend/
+yarn
+cd ../
 
 ### Start app
 
