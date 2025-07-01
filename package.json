@@ -9,14 +9,19 @@
     "server": "nodemon dist/backend/server.js",
     "client": "cd frontend && yarn run dev",
     "dev": "concurrently \"yarn run server\" \"yarn run client\"",
+    "data:import": "node dist/backend/seeder.js",
+    "data:destroy": "node dist/backend/seeder.js -d",
     "format": "prettier . --write",
     "build": "tsc"
   },
   "author": "Jorden Gerovac",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "3.0.2",
+    "colors": "1.4.0",
     "dotenv": "17.0.0",
-    "express": "5.1.0"
+    "express": "5.1.0",
+    "mongoose": "8.16.1"
   },
   "devDependencies": {
     "@types/express": "5.0.3",
