@@ -19,16 +19,6 @@ function Header() {
               <span>ProShop</span>
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Brand>
-            <img
-              src="/logo.png"
-              alt="ProShop"
-              width="30"
-              height="30"
-              className="d-inline-block align-top me-2"
-            />
-            <span>ProShop</span>
-          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
