@@ -1,7 +1,8 @@
-import express, { Request, Response, Application, application } from "express";
+import express, { Request, Response, Application } from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
+import { notFound, errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV || "development"}` });
 
@@ -16,6 +17,9 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/products", productRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, (): void => {
   console.log(`Server running on port ${port}`);
