@@ -46,7 +46,7 @@ if (rootElement) {
 	createRoot(rootElement).render(
 		<StrictMode>
 			<Provider store={store}>
-				<PayPalScriptProvider deferLoading={true} options={{ clientId: "" }}>
+				<PayPalScriptProvider options={{ "client-id": "" }} deferLoading={true}>
 					<RouterProvider router={router} />
 				</PayPalScriptProvider>
 			</Provider>
