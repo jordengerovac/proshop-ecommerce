@@ -35,7 +35,7 @@ function PlaceOrderScreen() {
 		};
 
 		try {
-			const createdOrder = await createOrder(order).unwrap();
+			const createdOrder = await createOrder({ order } as any).unwrap();
 			dispatch(clearCartItems());
 			navigate(`/order/${createdOrder._id}`);
 		} catch (err) {
@@ -67,7 +67,7 @@ function PlaceOrderScreen() {
 							{cart.cartItems.length === 0 ? (
 								<Message>Your cart is empty</Message>
 							) : (
-								<ListGroup variant="flush">
+								<ListGroup>
 									{cart.cartItems.map((item: any) => (
 										<ListGroup.Item key={item._id}>
 											<Row>
@@ -119,7 +119,11 @@ function PlaceOrderScreen() {
 						</ListGroup.Item>
 						<ListGroup.Item>
 							{isLoading && <Loader />}
-							{error && <Message variant="danger">{error as any}</Message>}
+							{error && (
+								<Message variant="danger">
+									{(error as any).data?.message || (error as any).error}.
+								</Message>
+							)}
 						</ListGroup.Item>
 						<ListGroup.Item className="d-grid">
 							<Button
