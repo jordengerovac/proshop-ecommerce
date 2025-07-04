@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorHandler.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config({
 	path: `.env.${process.env.NODE_ENV || "development"}`,
@@ -22,6 +23,9 @@ app.use(
 		extended: false,
 	}),
 );
+
+// Cookie parser middleware
+app.use(cookieParser());
 
 app.get("/", (req: Request, res: Response) => {
 	res.send("API is running...");
