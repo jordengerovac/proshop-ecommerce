@@ -8,8 +8,8 @@ export const protect = asyncHandler(async (req: Request, res: Response, next: Ne
 	let token: string;
 
 	// Read the jwt from cookie
-	// Name of token is jwt which comes from userController res.cookie
-	token = req.cookies.jwt;
+	// Name of token is PROSHOP_JWT which comes from userController res.cookie
+	token = req.cookies.PROSHOP_JWT;
 
 	if (token) {
 		try {
