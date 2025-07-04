@@ -8,7 +8,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 const getProducts = asyncHandler(async (req: Request, res: Response) => {
 	try {
 		const products = await Product.find({});
-		res.json(products);
+		res.status(200).json(products);
 	} catch (error: any) {
 		res.status(500).json({
 			message: error.message,
@@ -24,7 +24,7 @@ const getProductById = asyncHandler(async (req: Request, res: Response) => {
 	try {
 		const product = await Product.findById(req.params.id);
 		if (product) {
-			res.json(product);
+			res.status(200).json(product);
 		} else {
 			res.status(404);
 			throw new Error("Resource not found");

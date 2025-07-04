@@ -123,21 +123,55 @@ const updateUserProfile = asyncHandler(async (req: Request, res: Response) => {
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req: Request, res: Response) => {
-	res.send("get users");
+	try {
+		const users = await User.find({});
+		res.status(200).json(users);
+	} catch (error: any) {
+		res.status(500).json({
+			message: error.message,
+		});
+		throw new Error("Resource not found");
+	}
 });
 
 // @desc    Get user by id
 // @route   GET /api/users/:id
 // @access  Private/Admin
 const getUserById = asyncHandler(async (req: Request, res: Response) => {
-	res.send("get user by id");
+	try {
+		const user = await User.findById(req.params.id);
+		if (user) {
+			res.status(200).json(user);
+		} else {
+			res.status(404);
+			throw new Error("Resource not found");
+		}
+	} catch (error: any) {
+		res.status(500).json({
+			message: error.message,
+		});
+		throw new Error("Resource not found");
+	}
 });
 
 // @desc    Delete user
 // @route   DELETE /api/users/:id
 // @access  Private/Admin
 const deleteUser = asyncHandler(async (req: Request, res: Response) => {
-	res.send("delete user");
+	try {
+		const user = await User.findByIdAndDelete(req.params.id);
+		if (user) {
+			res.status(200).json(user);
+		} else {
+			res.status(404);
+			throw new Error("Resource not found");
+		}
+	} catch (error: any) {
+		res.status(500).json({
+			message: error.message,
+		});
+		throw new Error("Resource not found");
+	}
 });
 
 // @desc    Update user

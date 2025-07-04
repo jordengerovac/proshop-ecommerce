@@ -10,7 +10,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 			keepUnusedDataFor: 5, // Cache for 5 seconds
 		}),
 		getProductDetails: builder.query({
-			query: (id) => ({
+			query: (id: string) => ({
 				url: `${PRODUCTS_URL}/${id}`,
 			}),
 			keepUnusedDataFor: 5, // Cache for 5 seconds

@@ -44,7 +44,7 @@ function OrderScreen() {
 					type: "resetOptions" as any,
 					value: {
 						...updatedOptions,
-						currency: "USD",
+						currency: "CAD",
 					} as any,
 				});
 				paypalDispatch({ type: "setLoadingStatus" as any, value: "pending" as any });
@@ -85,8 +85,8 @@ function OrderScreen() {
 				await payOrder({ orderId, details });
 				refetch();
 				toast.success("Payment successful");
-			} catch (error) {
-				toast.error(error.data.message || error.message);
+			} catch (err: any) {
+				toast.error(err?.data.message || err?.message);
 			}
 		});
 	};
