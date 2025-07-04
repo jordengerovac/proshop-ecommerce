@@ -24,7 +24,7 @@ function OrderScreen() {
 
 	const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
-	const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+	const [{ isPending, options }, paypalDispatch] = usePayPalScriptReducer();
 
 	const {
 		data: paypal,
@@ -37,16 +37,23 @@ function OrderScreen() {
 	useEffect(() => {
 		if (!errorPayPal && !loadingPayPal && paypal.clientId) {
 			const loadPayPalScript = async () => {
+				let updatedOptions = { ...options };
+				updatedOptions["client-id"] = paypal.clientId;
+
 				paypalDispatch({
 					type: "resetOptions" as any,
 					value: {
-						"client-id": paypal.clientId,
-						currency: "CAD",
+						...updatedOptions,
+						currency: "USD",
 					} as any,
 				});
 				paypalDispatch({ type: "setLoadingStatus" as any, value: "pending" as any });
 			};
-			loadPayPalScript();
+			if (order && !order.isPaid) {
+				if (!window.paypal) {
+					loadPayPalScript();
+				}
+			}
 		}
 	}, [order, paypal, paypalDispatch, loadingPayPal, errorPayPal]);
 
@@ -84,7 +91,9 @@ function OrderScreen() {
 		});
 	};
 
-	const onError = () => {};
+	const onError = (error: any) => {
+		toast.error(error.message);
+	};
 
 	return (
 		<>
@@ -201,6 +210,7 @@ function OrderScreen() {
 															createOrder={createOrder}
 															onApprove={onApprove}
 															onError={onError}
+															style={{ layout: "vertical" }}
 														></PayPalButtons>
 													</div>
 												</div>
