@@ -3,18 +3,35 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
-import { useDeleteProductMutation, useGetProductsQuery } from "../../slices/productsApiSlice";
+import {
+	useCreateProductMutation,
+	useDeleteProductMutation,
+	useGetProductsQuery,
+} from "../../slices/productsApiSlice";
 import { toast } from "react-toastify";
 
 function ProductListScreen() {
 	const { data: products, isLoading, error, refetch } = useGetProductsQuery({});
+
+	const [createProduct, { isLoading: loadingCreate }] = useCreateProductMutation();
 
 	const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
 
 	const deleteHandler = async (id: string) => {
 		if (window.confirm("Are you sure")) {
 			try {
-				await deleteProduct(id);
+				await deleteProduct({ productId: id as string });
+				refetch();
+			} catch (err) {
+				toast.error(err?.data?.message || err.error);
+			}
+		}
+	};
+
+	const createProductHandler = async () => {
+		if (window.confirm("Are you sure you want to create a new product?")) {
+			try {
+				await createProduct({});
 				refetch();
 			} catch (err) {
 				toast.error(err?.data?.message || err.error);
@@ -29,7 +46,7 @@ function ProductListScreen() {
 					<h1>Products</h1>
 				</Col>
 				<Col className="text-end">
-					<Button className="btn-sm m-3">
+					<Button className="btn-sm m-3" onClick={createProductHandler}>
 						<FaEdit /> Create Product
 					</Button>
 				</Col>
@@ -59,7 +76,7 @@ function ProductListScreen() {
 								<td>{product.category}</td>
 								<td>{product.brand}</td>
 								<td>
-									<LinkContainer to={`/admin/product/${product._id}`}>
+									<LinkContainer to={`/admin/product/${product._id}/edit`}>
 										<Button className="btn-sm mx-2" variant="light">
 											<FaEdit />
 										</Button>
