@@ -65,7 +65,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
 // @route   POST /api/users/logout
 // @access  Private
 const logoutUser = asyncHandler(async (req: Request, res: Response) => {
-	res.cookie("jwt", "", {
+	res.cookie("PROSHOP_JWT", "", {
 		httpOnly: true,
 		expires: new Date(0),
 	});
