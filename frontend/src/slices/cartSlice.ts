@@ -3,36 +3,34 @@ import { updateCart } from "../utils/cartUtils.js";
 
 const cartFromStorage = localStorage.getItem("cart");
 const initialState = cartFromStorage
-  ? JSON.parse(cartFromStorage)
-  : { cartItems: [] };
+	? JSON.parse(cartFromStorage)
+	: {
+			cartItems: [],
+		};
 
 const cartSlice = createSlice({
-  name: "cart",
-  initialState,
-  reducers: {
-    addToCart: (state: any, action: any) => {
-      const item = action.payload;
+	name: "cart",
+	initialState,
+	reducers: {
+		addToCart: (state: any, action: any) => {
+			const item = action.payload;
 
-      const existItem = state.cartItems.find((x: any) => x._id === item._id);
+			const existItem = state.cartItems.find((x: any) => x._id === item._id);
 
-      if (existItem) {
-        state.cartItems = state.cartItems.map((x: any) =>
-          x._id === existItem._id ? item : x,
-        );
-      } else {
-        state.cartItems = [...state.cartItems, item];
-      }
+			if (existItem) {
+				state.cartItems = state.cartItems.map((x: any) => (x._id === existItem._id ? item : x));
+			} else {
+				state.cartItems = [...state.cartItems, item];
+			}
 
-      return updateCart(state);
-    },
-    removeFromCart: (state: any, action: any) => {
-      state.cartItems = state.cartItems.filter(
-        (x: any) => x._id !== action.payload,
-      );
+			return updateCart(state);
+		},
+		removeFromCart: (state: any, action: any) => {
+			state.cartItems = state.cartItems.filter((x: any) => x._id !== action.payload);
 
-      return updateCart(state);
-    },
-  },
+			return updateCart(state);
+		},
+	},
 });
 
 export const { addToCart, removeFromCart } = cartSlice.actions;

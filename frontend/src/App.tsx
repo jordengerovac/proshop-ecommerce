@@ -4,17 +4,17 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 function App() {
-  return (
-    <>
-      <Header />
-      <main className="py-3">
-        <Container>
-          <Outlet />
-        </Container>
-      </main>
-      <Footer />
-    </>
-  );
+	return (
+		<>
+			<Header />
+			<main className="py-3">
+				<Container>
+					<Outlet />
+				</Container>
+			</main>
+			<Footer />
+		</>
+	);
 }
 
 export default App;
