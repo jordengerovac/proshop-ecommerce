@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/userModel.js";
-import jwt from "jsonwebtoken";
 import { generateToken } from "../utils/generateToken.js";
 
 // @desc    Auth user & get token
@@ -174,11 +173,26 @@ const deleteUser = asyncHandler(async (req: Request, res: Response) => {
 	}
 });
 
-// @desc    Update user
-// @route   PUT /api/users/:id
+// @desc    Update a product
+// @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateUser = asyncHandler(async (req: Request, res: Response) => {
-	res.send("update user");
+	const { name, email, password, isAdmin } = req.body;
+
+	const user = await User.findById(req.params.id);
+
+	if (user) {
+		user.name = name;
+		user.email = email;
+		user.password = password;
+		user.isAdmin = isAdmin;
+
+		const updatedUser = await user.save();
+		res.json(updatedUser);
+	} else {
+		res.status(404);
+		throw new Error("Product not found");
+	}
 });
 
 export {
