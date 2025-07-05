@@ -4,9 +4,12 @@ import IProduct from "../types/product.type";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { useParams } from "react-router-dom";
+import Paginate from "../components/Paginate";
 
 function HomeScreen() {
-	const { data: products, isLoading, error } = useGetProductsQuery({});
+	const { pageNumber } = useParams();
+	const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
 
 	return (
 		<>
@@ -18,12 +21,13 @@ function HomeScreen() {
 				<>
 					<h1>Latest Products</h1>
 					<Row>
-						{products?.map((product: IProduct) => (
+						{data?.products.map((product: IProduct) => (
 							<Col key={product._id} sm={12} md={6} lg={4} xl={3}>
 								<Product product={product} />
 							</Col>
 						))}
 					</Row>
+					<Paginate pages={data?.pages} page={data?.page}></Paginate>
 				</>
 			)}
 		</>
