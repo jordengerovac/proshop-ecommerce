@@ -157,18 +157,16 @@ const getUserById = asyncHandler(async (req: Request, res: Response) => {
 // @route   DELETE /api/users/:id
 // @access  Private/Admin
 const deleteUser = asyncHandler(async (req: Request, res: Response) => {
-	try {
-		const user = await User.findByIdAndDelete(req.params.id);
-		if (user) {
-			res.status(200).json(user);
-		} else {
-			res.status(404);
-			throw new Error("Resource not found");
+	const user = await User.findById(req.params.id);
+	if (user) {
+		if (user.isAdmin) {
+			res.status(400);
+			throw new Error("Cannot delete admin user");
 		}
-	} catch (error: any) {
-		res.status(500).json({
-			message: error.message,
-		});
+		await User.deleteOne({ _id: user._id });
+		res.status(200).json({ message: "User deleted successfully" });
+	} else {
+		res.status(404);
 		throw new Error("Resource not found");
 	}
 });
@@ -177,18 +175,16 @@ const deleteUser = asyncHandler(async (req: Request, res: Response) => {
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateUser = asyncHandler(async (req: Request, res: Response) => {
-	const { name, email, password, isAdmin } = req.body;
-
 	const user = await User.findById(req.params.id);
 
 	if (user) {
-		user.name = name;
-		user.email = email;
-		user.password = password;
-		user.isAdmin = isAdmin;
+		user.name = req.body.name || user.name;
+		user.email = req.body.email || user.email;
+		user.password = req.body.password || user.password;
+		user.isAdmin = Boolean(req.body.isAdmin);
 
 		const updatedUser = await user.save();
-		res.json(updatedUser);
+		res.status(200).json(updatedUser);
 	} else {
 		res.status(404);
 		throw new Error("Product not found");
