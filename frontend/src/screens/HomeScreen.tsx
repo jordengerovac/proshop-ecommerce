@@ -7,6 +7,7 @@ import Message from "../components/Message";
 import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
 import ProductCarousel from "../components/ProductCarousel";
+import Meta from "../components/Meta";
 
 function HomeScreen() {
 	const { pageNumber, keyword } = useParams();

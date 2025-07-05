@@ -7,6 +7,7 @@ import {
 	RouterProvider,
 } from "react-router-dom";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import store from "./store";
 import "./styles/bootstrap.custom.scss";
@@ -64,11 +65,13 @@ const rootElement = document.getElementById("root");
 if (rootElement) {
 	createRoot(rootElement).render(
 		<StrictMode>
-			<Provider store={store}>
-				<PayPalScriptProvider deferLoading={true} options={{ clientId: "" }}>
-					<RouterProvider router={router} />
-				</PayPalScriptProvider>
-			</Provider>
+			<HelmetProvider>
+				<Provider store={store}>
+					<PayPalScriptProvider deferLoading={true} options={{ clientId: "" }}>
+						<RouterProvider router={router} />
+					</PayPalScriptProvider>
+				</Provider>
+			</HelmetProvider>
 		</StrictMode>,
 	);
 } else {
