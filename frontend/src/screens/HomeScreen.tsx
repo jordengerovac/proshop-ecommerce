@@ -4,15 +4,23 @@ import IProduct from "../types/product.type";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 
 function HomeScreen() {
-	const { pageNumber } = useParams();
-	const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
+	const { pageNumber, keyword } = useParams();
+	const { data, isLoading, error } = useGetProductsQuery({ pageNumber, keyword });
 
 	return (
 		<>
+			{!keyword ? (
+				<ProductCarousel />
+			) : (
+				<Link to="/" className="btn btn-light">
+					Go Back
+				</Link>
+			)}
 			{isLoading ? (
 				<Loader />
 			) : error ? (

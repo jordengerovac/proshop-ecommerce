@@ -23,7 +23,7 @@ const getProducts = asyncHandler(async (req, res) => {
 		.limit(pageSize)
 		.skip(pageSize * (page - 1));
 
-	res.json({ products, page, pages: Math.ceil(count / pageSize) });
+	res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc    Fetch a product
@@ -151,7 +151,7 @@ const createProductReview = asyncHandler(async (req: Request, res: Response) => 
 const getTopProducts = asyncHandler(async (req: Request, res: Response) => {
 	const products = await Product.find({}).sort({ rating: -1 }).limit(3);
 
-	res.json(products);
+	res.status(200).json(products);
 });
 
 export {
